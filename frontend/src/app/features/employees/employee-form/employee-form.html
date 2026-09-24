@@ -1,0 +1,525 @@
+<div class="employee-page">
+
+  <!-- =========================================
+       PAGE HEADER
+  ========================================== -->
+  <header class="page-header">
+
+    <div class="header-left">
+
+      <div class="breadcrumb">
+        <span>Employees</span>
+        <span class="separator">/</span>
+        <span class="current">
+          {{ isEditMode ? 'Edit Employee' : 'Add Employee' }}
+        </span>
+      </div>
+
+      <div class="title-row">
+
+        <div class="title-icon">
+          <span>{{ isEditMode ? '✎' : '+' }}</span>
+        </div>
+
+        <div>
+          <h1>
+            {{ isEditMode ? 'Edit Employee' : 'Add Employee' }}
+          </h1>
+
+          <p>
+            {{ isEditMode
+              ? 'Update employee information and keep your records up to date.'
+              : 'Create a new employee profile and add them to your organization.' }}
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="header-status">
+      <span class="status-dot"></span>
+      <span>{{ isEditMode ? 'Editing Record' : 'New Record' }}</span>
+    </div>
+
+  </header>
+
+
+  <!-- =========================================
+       ERROR MESSAGE
+  ========================================== -->
+  <div class="page-error" *ngIf="error">
+
+    <div class="error-icon">
+      !
+    </div>
+
+    <div class="error-content">
+      <strong>Something went wrong</strong>
+      <span>{{ error }}</span>
+    </div>
+
+    <button
+      type="button"
+      class="error-close"
+      (click)="error = ''"
+      aria-label="Close error"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <!-- =========================================
+       LOADING
+  ========================================== -->
+  <div class="loading-container" *ngIf="loading">
+
+    <div class="loader"></div>
+
+    <strong>
+      {{ isEditMode
+        ? 'Loading employee details...'
+        : 'Preparing form...' }}
+    </strong>
+
+    <span>Please wait a moment</span>
+
+  </div>
+
+
+  <!-- =========================================
+       FORM
+  ========================================== -->
+  <form
+    *ngIf="!loading"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="employee-form"
+  >
+
+    <!-- =======================================
+         BASIC INFORMATION
+    ======================================== -->
+    <section class="form-card">
+
+      <div class="card-header">
+
+        <div class="card-heading">
+
+          <div class="card-icon blue">
+            <span>👤</span>
+          </div>
+
+          <div>
+            <h2>Basic Information</h2>
+            <p>Personal and contact information of the employee.</p>
+          </div>
+
+        </div>
+
+        <span class="section-number">
+          01
+        </span>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <!-- FIRST NAME -->
+        <div class="form-group">
+
+          <label for="firstName">
+            First Name
+            <span>*</span>
+          </label>
+
+          <div
+            class="input-wrapper"
+            [class.invalid]="
+              form.get('firstName')?.touched &&
+              form.get('firstName')?.invalid
+            "
+            [class.valid]="
+              form.get('firstName')?.touched &&
+              form.get('firstName')?.valid
+            "
+          >
+
+            <span class="input-icon">
+              A
+            </span>
+
+            <input
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              placeholder="Enter first name"
+              autocomplete="given-name"
+            />
+
+          </div>
+
+          <span
+            class="field-error"
+            *ngIf="
+              form.get('firstName')?.touched &&
+              form.get('firstName')?.invalid
+            "
+          >
+            First name is required and must be 50 characters or less.
+          </span>
+
+        </div>
+
+
+        <!-- LAST NAME -->
+        <div class="form-group">
+
+          <label for="lastName">
+            Last Name
+            <span>*</span>
+          </label>
+
+          <div
+            class="input-wrapper"
+            [class.invalid]="
+              form.get('lastName')?.touched &&
+              form.get('lastName')?.invalid
+            "
+            [class.valid]="
+              form.get('lastName')?.touched &&
+              form.get('lastName')?.valid
+            "
+          >
+
+            <span class="input-icon">
+              A
+            </span>
+
+            <input
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              placeholder="Enter last name"
+              autocomplete="family-name"
+            />
+
+          </div>
+
+          <span
+            class="field-error"
+            *ngIf="
+              form.get('lastName')?.touched &&
+              form.get('lastName')?.invalid
+            "
+          >
+            Last name is required and must be 50 characters or less.
+          </span>
+
+        </div>
+
+
+        <!-- EMAIL -->
+        <div class="form-group">
+
+          <label for="email">
+            Email Address
+            <span>*</span>
+          </label>
+
+          <div
+            class="input-wrapper"
+            [class.invalid]="
+              form.get('email')?.touched &&
+              form.get('email')?.invalid
+            "
+            [class.valid]="
+              form.get('email')?.touched &&
+              form.get('email')?.valid
+            "
+          >
+
+            <span class="input-icon email-icon">
+              @
+            </span>
+
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="employee@company.com"
+              autocomplete="email"
+            />
+
+          </div>
+
+          <span
+            class="field-error"
+            *ngIf="
+              form.get('email')?.touched &&
+              form.get('email')?.invalid
+            "
+          >
+            Please enter a valid email address.
+          </span>
+
+        </div>
+
+
+        <!-- PHONE -->
+        <div class="form-group">
+
+          <label for="phone">
+            Phone Number
+          </label>
+
+          <div class="input-wrapper">
+
+            <span class="input-icon phone-icon">
+              ☎
+            </span>
+
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              placeholder="Enter phone number"
+              autocomplete="tel"
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================
+         EMPLOYMENT INFORMATION
+    ======================================== -->
+    <section class="form-card">
+
+      <div class="card-header">
+
+        <div class="card-heading">
+
+          <div class="card-icon purple">
+            <span>💼</span>
+          </div>
+
+          <div>
+            <h2>Employment Information</h2>
+            <p>Job, salary and organizational details.</p>
+          </div>
+
+        </div>
+
+        <span class="section-number">
+          02
+        </span>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <!-- SALARY -->
+        <div class="form-group">
+
+          <label for="salary">
+            Annual Salary
+            <span>*</span>
+          </label>
+
+          <div
+            class="input-wrapper"
+            [class.invalid]="
+              form.get('salary')?.touched &&
+              form.get('salary')?.invalid
+            "
+          >
+
+            <span class="input-icon currency">
+              ₹
+            </span>
+
+            <input
+              id="salary"
+              type="number"
+              formControlName="salary"
+              placeholder="800000"
+              min="0"
+            />
+
+          </div>
+
+          <span
+            class="field-error"
+            *ngIf="
+              form.get('salary')?.touched &&
+              form.get('salary')?.invalid
+            "
+          >
+            Salary must be 0 or more.
+          </span>
+
+        </div>
+
+
+        <!-- HIRE DATE -->
+        <div class="form-group">
+
+          <label for="hireDate">
+            Hire Date
+            <span>*</span>
+          </label>
+
+          <div
+            class="input-wrapper"
+            [class.invalid]="
+              form.get('hireDate')?.touched &&
+              form.get('hireDate')?.invalid
+            "
+          >
+
+            <span class="input-icon date-icon">
+              ▣
+            </span>
+
+            <input
+              id="hireDate"
+              type="date"
+              formControlName="hireDate"
+            />
+
+          </div>
+
+          <span
+            class="field-error"
+            *ngIf="
+              form.get('hireDate')?.touched &&
+              form.get('hireDate')?.invalid
+            "
+          >
+            Hire date is required.
+          </span>
+
+        </div>
+
+
+        <!-- DEPARTMENT -->
+        <div class="form-group full-width">
+
+          <label for="department">
+            Department
+            <span>*</span>
+          </label>
+
+          <div
+            class="input-wrapper select-wrapper"
+            [class.invalid]="
+              form.get('department')?.touched &&
+              form.get('department')?.invalid
+            "
+          >
+
+            <span class="input-icon">
+              ▦
+            </span>
+
+            <select
+              id="department"
+              formControlName="department"
+            >
+
+              <option
+                [ngValue]="null"
+                disabled
+              >
+                Select a department
+              </option>
+
+              <option
+                *ngFor="let department of departments"
+                [ngValue]="department.name"
+              >
+                {{ department.name }}
+              </option>
+
+            </select>
+
+          </div>
+
+          <span
+            class="field-error"
+            *ngIf="
+              form.get('department')?.touched &&
+              form.get('department')?.invalid
+            "
+          >
+            Department is required.
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================
+         FORM FOOTER
+    ======================================== -->
+    <div class="form-footer">
+
+      <div class="required-note">
+        <span>*</span>
+        Required fields
+      </div>
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn-cancel"
+          [disabled]="submitting"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="btn-save"
+          [disabled]="submitting"
+        >
+
+          <span
+            class="button-loader"
+            *ngIf="submitting"
+          ></span>
+
+          <span class="save-icon" *ngIf="!submitting">
+            {{ isEditMode ? '✓' : '+' }}
+          </span>
+
+          <span>
+            {{ submitting
+              ? (isEditMode ? 'Updating...' : 'Saving...')
+              : (isEditMode ? 'Update Employee' : 'Save Employee') }}
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

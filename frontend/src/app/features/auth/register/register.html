@@ -1,0 +1,383 @@
+<div class="register-page">
+
+  <!-- =========================
+       LEFT BRANDING SECTION
+  ========================== -->
+  <section class="branding-section">
+
+    <div class="branding-content">
+
+      <!-- Logo -->
+      <div class="brand-logo">
+
+        <div class="logo-box">
+          EMS
+        </div>
+
+        <div class="logo-text">
+          <h1>Employee Management</h1>
+          <span>Management System</span>
+        </div>
+
+      </div>
+
+
+      <!-- Main Branding -->
+      <div class="brand-main">
+
+        <span class="welcome-badge">
+          <span class="badge-dot"></span>
+          Employee Management System
+        </span>
+
+        <h2>
+          Build a smarter
+          <span>workforce.</span>
+        </h2>
+
+        <p>
+          Create your account and get access to a centralized
+          platform for managing employees, departments,
+          attendance and organizational operations.
+        </p>
+
+      </div>
+
+
+      <!-- Features -->
+      <div class="feature-list">
+
+        <div class="feature-item">
+
+          <div class="feature-icon">
+            ✓
+          </div>
+
+          <div>
+            <strong>Simple Employee Management</strong>
+            <span>Organize employee information effortlessly</span>
+          </div>
+
+        </div>
+
+
+        <div class="feature-item">
+
+          <div class="feature-icon">
+            ✓
+          </div>
+
+          <div>
+            <strong>Secure Access</strong>
+            <span>Protected authentication for your account</span>
+          </div>
+
+        </div>
+
+
+        <div class="feature-item">
+
+          <div class="feature-icon">
+            ✓
+          </div>
+
+          <div>
+            <strong>Powerful Administration</strong>
+            <span>Manage your organization from one platform</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Footer -->
+      <div class="branding-footer">
+        © 2026 EMS. All rights reserved.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       RIGHT REGISTER SECTION
+  ========================== -->
+  <section class="register-section">
+
+    <div class="register-wrapper">
+
+
+      <!-- Mobile Logo -->
+      <div class="mobile-logo">
+
+        <div class="mobile-logo-box">
+          EMS
+        </div>
+
+        <span>
+          Employee Management System
+        </span>
+
+      </div>
+
+
+      <!-- Registration Card -->
+      <div class="register-card">
+
+
+        <!-- Header -->
+        <div class="register-header">
+
+          <div class="register-icon">
+            +
+          </div>
+
+          <h2>
+            Create your account
+          </h2>
+
+          <p>
+            Register to get started with EMS
+          </p>
+
+        </div>
+
+
+        <!-- Backend Error -->
+        <div
+          *ngIf="error"
+          class="error-message"
+        >
+
+          <div class="error-icon">
+            !
+          </div>
+
+          <div class="error-content">
+
+            <strong>
+              Registration failed
+            </strong>
+
+            <span>
+              {{ error }}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- Registration Form -->
+        <form
+          [formGroup]="form"
+          (ngSubmit)="onSubmit()"
+          class="register-form"
+        >
+
+
+          <!-- Name -->
+          <div class="form-group">
+
+            <label for="name">
+              Full Name
+            </label>
+
+            <div
+              class="input-wrapper"
+              [class.input-error]="
+                form.get('name')?.touched &&
+                form.get('name')?.invalid
+              "
+            >
+
+              <span class="input-icon">
+                ◉
+              </span>
+
+              <input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="Enter your full name"
+                autocomplete="name"
+              />
+
+            </div>
+
+            <span
+              class="field-error"
+              *ngIf="
+                form.get('name')?.touched &&
+                form.get('name')?.invalid
+              "
+            >
+              Name is required.
+            </span>
+
+          </div>
+
+
+          <!-- Email -->
+          <div class="form-group">
+
+            <label for="email">
+              Email Address
+            </label>
+
+            <div
+              class="input-wrapper"
+              [class.input-error]="
+                form.get('email')?.touched &&
+                form.get('email')?.invalid
+              "
+            >
+
+              <span class="input-icon">
+                @
+              </span>
+
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+              />
+
+            </div>
+
+            <span
+              class="field-error"
+              *ngIf="
+                form.get('email')?.touched &&
+                form.get('email')?.invalid
+              "
+            >
+              Valid email is required.
+            </span>
+
+          </div>
+
+
+          <!-- Password -->
+          <div class="form-group">
+
+            <label for="password">
+              Password
+            </label>
+
+            <div
+              class="input-wrapper"
+              [class.input-error]="
+                form.get('password')?.touched &&
+                form.get('password')?.invalid
+              "
+            >
+
+              <span class="input-icon">
+                ◆
+              </span>
+
+              <input
+                id="password"
+                type="password"
+                formControlName="password"
+                placeholder="Create a password"
+                autocomplete="new-password"
+              />
+
+            </div>
+
+            <span
+              class="field-error"
+              *ngIf="
+                form.get('password')?.touched &&
+                form.get('password')?.invalid
+              "
+            >
+              Password must be at least 6 characters.
+            </span>
+
+          </div>
+
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="register-button"
+            [disabled]="loading"
+          >
+
+            <!-- Normal -->
+            <span
+              *ngIf="!loading"
+              class="button-content"
+            >
+
+              <span>
+                Create Account
+              </span>
+
+              <span class="button-arrow">
+                →
+              </span>
+
+            </span>
+
+
+            <!-- Loading -->
+            <span
+              *ngIf="loading"
+              class="button-content"
+            >
+
+              <span class="spinner"></span>
+
+              <span>
+                Registering...
+              </span>
+
+            </span>
+
+          </button>
+
+        </form>
+
+
+        <!-- Login -->
+        <div class="login-section-bottom">
+
+          <span>
+            Already have an account?
+          </span>
+
+          <a routerLink="/login">
+            Sign in
+          </a>
+
+        </div>
+
+
+        <!-- Security -->
+        <div class="security-info">
+
+          <span class="security-icon">
+            ✓
+          </span>
+
+          <span>
+            Your information is securely protected
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>

@@ -1,0 +1,472 @@
+
+
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Logo -->
+    <div class="sidebar-header">
+      <div class="logo-icon">
+        EMS
+      </div>
+
+      <div class="logo-text">
+        <h2>EMS</h2>
+        <span>Employee Management</span>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav">
+
+      <div class="nav-section">
+        <span class="section-title">MAIN</span>
+
+        <!-- <a
+          routerLink="/employees"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-item"
+        >
+          <span class="nav-icon">⌂</span>
+          <span>Dashboard</span>
+        </a> -->
+
+        <!-- <a
+          routerLink="/employee-details"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="nav-item"
+        >
+          <span class="nav-icon">👥</span>
+          <span>View Employees</span>
+        </a> -->
+
+        <a
+          routerLink="/employees/new"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <span class="nav-icon">＋</span>
+          <span>Add Employee</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <span class="section-title">MANAGEMENT</span>
+
+        <a
+          routerLink="/departments"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <span class="nav-icon">▦</span>
+          <span>Departments</span>
+        </a>
+
+        <a
+          routerLink="/attendance"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <span class="nav-icon">✓</span>
+          <span>Attendance</span>
+        </a>
+
+        <a
+          routerLink="/leave"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <span class="nav-icon">▣</span>
+          <span>Leave Management</span>
+        </a>
+
+        <a
+          routerLink="/reports"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <span class="nav-icon">▤</span>
+          <span>Reports</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <span class="section-title">ACCOUNT</span>
+
+        <a
+          routerLink="/profile"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <span class="nav-icon">◉</span>
+          <span>My Profile</span>
+        </a>
+
+        <a
+          routerLink="/settings"
+          routerLinkActive="active"
+          class="nav-item"
+        >
+          <span class="nav-icon">⚙</span>
+          <span>Settings</span>
+        </a>
+      </div>
+
+    </nav>
+
+    <!-- Sidebar Bottom -->
+    <div class="sidebar-bottom">
+
+      <div class="user-card">
+        <div class="user-avatar">
+          {{ userInitial }}
+        </div>
+
+        <div class="user-info">
+          <strong>{{ userName }}</strong>
+          <span>Administrator</span>
+        </div>
+
+        <button
+          class="logout-btn"
+          title="Logout"
+          (click)="logout()"
+        >
+          ↪
+        </button>
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TOP HEADER -->
+    <header class="top-header">
+
+      <div class="page-heading">
+        <div>
+          <span class="breadcrumb">Employees / Directory</span>
+          <h1>Employees</h1>
+          <p>Manage and view all employees in your organization.</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+
+        <button class="notification-btn" title="Notifications">
+          <span>♢</span>
+          <small></small>
+        </button>
+
+        <div class="header-avatar">
+          {{ userInitial }}
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- PAGE BODY -->
+    <section class="content-area">
+
+      <!-- STAT CARDS -->
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon employees-icon">
+            👥
+          </div>
+
+          <div>
+            <span>Total Employees</span>
+            <h3>{{ employees.length }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon department-icon">
+            ▦
+          </div>
+
+          <div>
+            <span>Departments</span>
+            <h3>{{ departmentCount }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon active-icon">
+            ✓
+          </div>
+
+          <div>
+            <span>Active Employees</span>
+            <h3>{{ activeEmployees }}</h3>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon salary-icon">
+            ₹
+          </div>
+
+          <div>
+            <span>Total Payroll</span>
+            <h3>{{ totalSalary | currency:'INR':'symbol':'1.0-0' }}</h3>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- EMPLOYEE PANEL -->
+      <div class="employee-panel">
+
+        <!-- PANEL HEADER -->
+        <div class="panel-header">
+
+          <div>
+            <h2>Employee Directory</h2>
+            <p>View and manage employee information.</p>
+          </div>
+
+          <a
+            routerLink="/employees/new"
+            class="add-employee-btn"
+          >
+            <span>＋</span>
+            Add Employee
+          </a>
+
+        </div>
+
+
+        <!-- SEARCH / FILTER -->
+        <div class="toolbar">
+
+          <div class="search-box">
+            <span class="search-icon">⌕</span>
+
+            <input
+              type="text"
+              placeholder="Search employees..."
+              [(ngModel)]="searchText"
+              (input)="filterEmployees()"
+            />
+          </div>
+
+          <div class="toolbar-right">
+
+            <select
+              [(ngModel)]="selectedDepartment"
+              (change)="filterEmployees()"
+              class="filter-select"
+            >
+              <option value="">All Departments</option>
+
+              <option
+                *ngFor="let department of departments"
+                [value]="department"
+              >
+                {{ department }}
+              </option>
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- LOADING -->
+        <div
+          class="loading-container"
+          *ngIf="loading"
+        >
+          <div class="loader"></div>
+          <span>Loading employees...</span>
+        </div>
+
+
+        <!-- ERROR -->
+        <div
+          class="error-container"
+          *ngIf="error"
+        >
+          <span>⚠</span>
+          {{ error }}
+
+          <button (click)="loadEmployees()">
+            Retry
+          </button>
+        </div>
+
+
+        <!-- TABLE -->
+        <div
+          class="table-container"
+          *ngIf="!loading && !error"
+        >
+
+          <table *ngIf="filteredEmployees.length > 0">
+
+            <thead>
+              <tr>
+                <th>EMPLOYEE</th>
+                <th>EMAIL</th>
+                <th>DEPARTMENT</th>
+                <th>SALARY</th>
+                <th>HIRE DATE</th>
+                <th>STATUS</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr
+                *ngFor="let emp of filteredEmployees"
+              >
+
+                <!-- Employee -->
+                <td>
+                  <div class="employee-info">
+
+                    <div class="employee-avatar">
+                      {{ getInitials(emp.firstName, emp.lastName) }}
+                    </div>
+
+                    <div>
+                      <strong>
+                        {{ emp.firstName }} {{ emp.lastName }}
+                      </strong>
+
+                      <span>
+                        Employee #{{ emp.id }}
+                      </span>
+                    </div>
+
+                  </div>
+                </td>
+
+
+                <!-- Email -->
+                <td>
+                  <span class="email">
+                    {{ emp.email }}
+                  </span>
+                </td>
+
+
+                <!-- Department -->
+                <td>
+                  <span class="department-badge">
+                    {{ emp.department || 'Not Assigned' }}
+                  </span>
+                </td>
+
+
+                <!-- Salary -->
+                <td>
+                  <strong class="salary">
+                    {{ emp.salary | currency:'INR':'symbol':'1.0-0' }}
+                  </strong>
+                </td>
+
+
+                <!-- Hire Date -->
+                <td>
+                  <span class="hire-date">
+                    {{ emp.hireDate | date:'dd MMM yyyy' }}
+                  </span>
+                </td>
+
+
+                <!-- Status -->
+                <td>
+                  <span class="status-badge">
+                    <span class="status-dot"></span>
+                    Active
+                  </span>
+                </td>
+
+
+                <!-- Actions -->
+                <td>
+
+  <div class="action-buttons">
+
+    <a
+      [routerLink]="['/employees', emp.id]"
+      class="action-btn view-btn"
+      title="View Employee">
+      👁
+    </a>
+
+    <a
+      [routerLink]="['/employees', emp.id, 'edit']"
+      class="action-btn edit-btn"
+      title="Edit Employee">
+      ✎
+    </a>
+
+    <button
+      class="action-btn delete-btn"
+      title="Delete Employee"
+      (click)="deleteEmployee(emp.id)">
+      ×
+    </button>
+
+  </div>
+
+</td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+
+          <!-- EMPTY STATE -->
+          <div
+            class="empty-state"
+            *ngIf="filteredEmployees.length === 0"
+          >
+
+            <div class="empty-icon">
+              👥
+            </div>
+
+            <h3>No employees found</h3>
+
+            <p>
+              Try changing your search or add a new employee.
+            </p>
+
+            <a
+              routerLink="/employees/new"
+              class="add-employee-btn"
+            >
+              ＋ Add Employee
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
