@@ -24,16 +24,11 @@ export const routes: Routes = [
     component: RegisterComponent
   },
 
+ 
+
   // Dashboard
   {
     path: 'dashboard',
-    redirectTo: 'employees',
-    pathMatch: 'full'
-  },
-
-  // Employee List
-  {
-    path: 'employees',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/employees/employee-list/employee-list')
@@ -58,19 +53,8 @@ export const routes: Routes = [
         .then(m => m.EmployeeFormComponent)
   },
 
-  // Employee Details
-  {
-    path: 'employee-details',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./features/employees/employee-detail/employee-detail')
-        .then(m => m.EmployeeDetail)
-  },
+ 
 
-  // Invalid Route
-  // {
-  //   path: '**',
-  //   redirectTo: 'login'
-  // }
+ 
 
 ];

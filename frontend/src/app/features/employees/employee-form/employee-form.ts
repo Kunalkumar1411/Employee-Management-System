@@ -306,7 +306,7 @@ export class EmployeeFormComponent implements OnInit {
             this.submitting = false;
 
             this.router.navigate([
-              '/employees'
+              '/dashboard'
             ]);
 
           },
@@ -350,7 +350,7 @@ export class EmployeeFormComponent implements OnInit {
           this.submitting = false;
 
           this.router.navigate([
-            '/employees'
+            '/dashboard'
           ]);
 
         },
@@ -382,7 +382,7 @@ export class EmployeeFormComponent implements OnInit {
   cancel(): void {
 
     this.router.navigate([
-      '/employees'
+      '/dashboard'
     ]);
 
   }
